@@ -24,8 +24,21 @@ export default class Tile extends cc.Component {
     });
   }
 
-  setTile(index: number): void {
+  setTile(index: number, glowInterval?: number): void {
     this.node.getComponent(cc.Sprite).spriteFrame = this.textures[index];
+
+    const animation = this.node.getChildByName('GlowAnimation');
+
+    if (animation) {
+      animation.active = false;
+
+      if (glowInterval) {
+        // glowInterval is defined when a result pattern is applied, so the animation should be displayed when the spinning ends
+        setTimeout(() => {
+          animation.active = true;
+        }, glowInterval);
+      }
+    }
   }
 
   setRandom(): void {

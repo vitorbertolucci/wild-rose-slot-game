@@ -96,7 +96,7 @@ export default class Machine extends cc.Component {
       const theReel = this.reels[i].getComponent('Reel');
 
       setTimeout(() => {
-        theReel.readyStop([...result[i]]);
+        theReel.readyStop([...result[i]], 2500 - spinDelay * 1000);
       }, spinDelay * 1000);
     }
   }

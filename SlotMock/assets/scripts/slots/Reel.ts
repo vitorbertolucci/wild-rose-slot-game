@@ -16,6 +16,8 @@ export default class Reel extends cc.Component {
   @property({ type: cc.Prefab })
   public _tilePrefab = null;
 
+  private glowInterval = 0;
+
   @property({ type: cc.Prefab })
   get tilePrefab(): cc.Prefab {
     return this._tilePrefab;
@@ -51,9 +53,10 @@ export default class Reel extends cc.Component {
     }
   }
 
-  readyStop(newResult: Array<number>): void {
+  readyStop(newResult: Array<number>, glowInterval: number): void {
     const check = this.spinDirection === Aux.Direction.Down || newResult == null;
     this.result = check ? newResult : newResult.reverse();
+    this.glowInterval = glowInterval;
     this.stopSpinning = true;
   }
 
@@ -69,7 +72,7 @@ export default class Reel extends cc.Component {
       }
 
       if (pop != null && pop >= 0) {
-        el.getComponent('Tile').setTile(pop);
+        el.getComponent('Tile').setTile(pop, this.glowInterval);
       } else {
         el.getComponent('Tile').setRandom();
       }
